@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="Asset/fevicon.ico" type="image/x-icon">
+</head>
+
+<body class="bg-gray-200 text-gray-800 min-h-screen flex flex-col items-center justify-center">
+    <div class="max-w-2xl p-8 bg-white rounded-md shadow-md w-full">
+        <header class="text-3xl mb-6 text-center">Expense Tracker</header>
+
+        <!-- Navigation Bar -->
+        <nav class="flex justify-center gap-4 mb-8">
+            <button id="expense-button" class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-black active:bg-gray-100"
+                onclick="toggleSection('expense-section', 'earnings-section', 'summary-section');">Expense</button>
+            <button id="earnings-button" class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-black active:bg-gray-100"
+                onclick="toggleSection('earnings-section', 'expense-section', 'summary-section')">Earnings</button>
+            <button id="summary-button" class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-black active:bg-gray-100"
+                onclick="toggleSection('summary-section', 'expense-section', 'earnings-section')">Summary</button>
+        </nav>
+
+        <!-- Expense Section -->
+        <section id="expense-section">
+            <div class="max-w-2xl p-8 bg-white rounded-md shadow-md w-full">
+                <header class="text-3xl mb-6 text-center">Expense Tracker</header>
+        
+                <form id="expense-form" class="mb-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Expense Name -->
+                        <div class="flex flex-col">
+                            <label for="expense-name" class="mb-2">Name:</label>
+                            <input type="text" id="expense-name"
+                                class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-black"
+                                placeholder="E.g., Grocery shopping" required>
+                        </div>
+        
+                        <!-- Expense Amount -->
+                        <div class="flex flex-col">
+                            <label for="expense-amount" class="mb-2">Amount:</label>
+                            <input type="number" id="expense-amount"
+                                class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-black"
+                                placeholder="0.00" step="0.01" required>
+                        </div>
+        
+                        <!-- Expense Category -->
+                        <div class="flex flex-col">
+                            <label for="expense-category" class="mb-2">Category:</label>
+                            <select id="expense-category"
+                                class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-black">
+                                <option value="groceries">Groceries</option>
+                                <option value="utilities">Utilities</option>
+                                <option value="rent_mortgage">Rent/Mortgage</option>
+                                <option value="transportation">Transportation</option>
+                                <option value="insurance">Insurance</option>
+                                <option value="healthcare">Healthcare</option>
+                                <option value="dining_out">Dining Out</option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="shopping">Shopping</option>
+                                <option value="home_maintenance">Home Maintenance</option>
+                                <option value="education">Education</option>
+                                <option value="debt_payments">Debt Payments</option>
+                                <option value="personal_care">Personal Care</option>
+                                <option value="gifts_donations">Gifts/Donations</option>
+                                <option value="travel">Travel</option>
+                                <option value="subscription_services">Subscription Services</option>
+                                <option value="hobbies">Hobbies</option>
+                                <option value="pets">Pets</option>
+                                <option value="miscellaneous">Miscellaneous</option>
+                                <!-- Add more categories as needed -->
+                            </select>
+                        </div>
+                    </div>
+        
+                    <button type="submit"
+                        class="w-full px-4 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-700 transition duration-300 ease-in-out mt-6">Add
+                        Expense</button>
+                </form>
+        
+                <section class="mb-6">
+                    <label for="category-filter" class="block mb-2 text-lg">Filter by Category:</label>
+                    <select id="category-filter"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-black">
+                        <option value="all">All Categories</option>
+                        <option value="groceries">Groceries</option>
+                        <option value="utilities">Utilities</option>
+                        <option value="rent_mortgage">Rent/Mortgage</option>
+                        <option value="transportation">Transportation</option>
+                        <option value="insurance">Insurance</option>
+                        <option value="healthcare">Healthcare</option>
+                        <option value="dining_out">Dining Out</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="shopping">Shopping</option>
+                        <option value="home_maintenance">Home Maintenance</option>
+                        <option value="education">Education</option>
+                        <option value="debt_payments">Debt Payments</option>
+                        <option value="personal_care">Personal Care</option>
+                        <option value="gifts_donations">Gifts/Donations</option>
+                        <option value="travel">Travel</option>
+                        <option value="subscription_services">Subscription Services</option>
+                        <option value="hobbies">Hobbies</option>
+                        <option value="pets">Pets</option>
+                        <option value="miscellaneous">Miscellaneous</option>
+                        <!-- Add more categories as needed -->
+                        </select>
+                        </section>
+        
+                        <section>
+                            <h2 class="text-2xl mb-4">Expenses</h2>
+                            <ul id="expense-list" class="list-none p-0 mb-4">
+                                <!-- Expense items will be dynamically added here -->
+                            </ul>
+                            <p id="total-expenses" class="font-bold">Total Expenses: ₹0.00</p>
+                        </section>
+                        
+                    </div>
+        </section>
+           
+
+
+    
+
+<!-- Earnings Section -->
+<section id="earnings-section" style="display: none;">
+    <div class="max-w-2xl p-8 bg-white rounded-md shadow-md w-full">
+        <header class="text-3xl mb-6 text-center">Earnings</header>
+
+        <!-- Earnings Form -->
+        <form id="earnings-form" class="mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Earnings Source -->
+                <div class="flex flex-col">
+                    <label for="earnings-source" class="mb-2">Source:</label>
+                    <input type="text" id="earnings-source"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-black"
+                        placeholder="E.g., Salary" required>
+                </div>
+
+                <!-- Earnings Amount -->
+                <div class="flex flex-col">
+                    <label for="earnings-amount" class="mb-2">Amount:</label>
+                    <input type="number" id="earnings-amount"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-black"
+                        placeholder="0.00" step="0.01" required>
+                </div>
+
+                <!-- Earnings Category -->
+                <div class="flex flex-col">
+                    <label for="earnings-category" class="mb-2">Category:</label>
+                    <select id="earnings-category"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-black">
+                        <option value="salary">Salary</option>
+                        <option value="freelance">Freelance</option>
+                        <option value="consulting">Consulting</option>
+                        <option value="investments">Investments</option>
+                        <option value="business">Business</option>
+                        <option value="other">Other</option>
+                        <!-- Add more categories as needed -->
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit"
+                class="w-full px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-700 transition duration-300 ease-in-out mt-6">Add
+                Earnings</button>
+        </form>
+
+        <section class="mb-6">
+            <label for="category-filter-earnings" class="block mb-2 text-lg">Filter by Category:</label>
+            <select id="category-filter-earnings"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-black">
+                <option value="all">All Categories</option>
+                <option value="salary">Salary</option>
+                <option value="freelance">Freelance</option>
+                <option value="consulting">Consulting</option>
+                <option value="investments">Investments</option>
+                <option value="business">Business</option>
+                <option value="other">Other</option>
+                <!-- Add more categories as needed -->
+            </select>
+        </section>
+
+        <section class="mt-8">
+            <h2 class="text-2xl mb-4">Earnings</h2>
+            <ul id="earnings-list" class="list-none p-0 mb-4">
+                <!-- Earning items will be dynamically added here -->
+            </ul>
+            <p id="total-earnings" class="font-bold">Total Earnings: ₹0.00</p>
+        </section>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+<section id="summary-section" style="display: none;">
+    <div class="max-w-2xl p-8 bg-white rounded-md shadow-md w-full">
+        <header class="text-3xl mb-6 text-center font-bold text-indigo-600">Financial Summary</header>
+
+        <section class="mb-6">
+            <h2 class="text-2xl mb-4">Overview</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="flex flex-col items-center bg-gray-100 p-4 rounded-md shadow-md">
+                    <p class="text-lg mb-2 font-semibold">Total Expenses</p>
+                    <span id="summary-total-expenses" class="text-2xl text-indigo-500 font-bold">₹0.00</span>
+                </div>
+
+                <div class="flex flex-col items-center bg-gray-100 p-4 rounded-md shadow-md">
+                    <p class="text-lg mb-2 font-semibold">Total Earnings</p>
+                    <span id="summary-total-earnings" class="text-2xl text-green-500 font-bold">₹0.00</span>
+                </div>
+
+                <div class="flex flex-col items-center bg-gray-100 p-4 rounded-md shadow-md">
+                    <p class="text-lg mb-2 font-semibold">Net Income</p>
+                    <span id="summary-net-income" class="text-2xl text-purple-500 font-bold">₹0.00</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-6">
+            <h2 class="text-2xl mb-4">Distribution</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <h3 class="text-lg mb-2 font-semibold">Expense Distribution by Category</h3>
+                    <ul id="expense-distribution" class="list-none p-0">
+                        <!-- Expense distribution items will be dynamically added here -->
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg mb-2 font-semibold">Earnings Distribution by Category</h3>
+                    <ul id="earnings-distribution" class="list-none p-0">
+                        <!-- Earnings distribution items will be dynamically added here -->
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+
+
+
+
+            <script src = "script.js"></script>
+            
+             <script>
+        function toggleSection(showId, hideId1, hideId2) {
+            document.getElementById(showId).style.display = 'block';
+            document.getElementById(hideId1).style.display = 'none';
+            document.getElementById(hideId2).style.display = 'none';
+        }
+    </script>
+            </body>
+</html>
